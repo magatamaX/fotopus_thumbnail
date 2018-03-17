@@ -1,0 +1,12 @@
+.htaccess
+.DS_Store
+prepros.cfg
+node_modules
+temp
+dist
+build
+typings/*
+!typings/common
+.sass-cache
+docs
+sftp-config.json
