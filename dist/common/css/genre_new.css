@@ -1,0 +1,330 @@
+@charset "utf-8";
+/* CSS Document */
+
+/*base
+----------------------------------------------------*/
+body {
+    min-width: 320px;
+    color: #333;
+}
+img {
+    max-width: 100%;
+}
+a {
+    color: #4c79a6;
+}
+a:hover img {
+    opacity: 0.8;
+    filter: alpha(opacity=80);
+}
+
+/*common
+----------------------------------------------------*/
+.ie8 .section .text_02 {
+    text-align: right;
+}
+a.pagetop02,
+a:link.pagetop02 {
+    font-size: 14px;
+    font-size: 1.4rem;
+}
+.mb0 {
+    margin-bottom: 0 !important;
+}
+.mb15 {
+    margin-bottom: 15px !important;
+}
+.clearfix {
+    zoom: 1
+}
+.clearfix:after {
+    content: "";
+    display: block;
+    clear: both;
+    overflow: hidden;
+}
+
+/*layout
+----------------------------------------------------*/
+#wrapper .cont {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+.col_pics {
+    text-align: center
+}
+#newflashButton {
+    float: right;
+}
+#hdButton {
+    text-align: right;
+}
+#hdButton #hdstart {
+    display: inline-block;
+    text-decoration: none;
+    float: right;
+}
+.secLead {
+    font-size: 14px;
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+}
+
+/*sec-main-image
+----------------------------------------------------*/
+.sec-main-image .title {
+    display: block;
+    color: #fff;
+    font-size: 40px;
+    font-weight: 400;
+    padding: 0 15px;
+    background: #000;
+    line-height: 1.8;
+}
+@media screen and (max-width: 599px) {
+    .sec-main-image .title {
+        font-size: 30px;
+    }
+}
+@media screen and (max-width: 480px) {
+    .sec-main-image .title {
+        font-size: 25px;
+    }
+}
+
+/*sns
+----------------------------------------------------*/
+.sns_area {
+    text-align: left;
+    height: 20px;
+    margin-top: 5px;
+    overflow: hidden;
+}
+.sns_btn{
+    display: inline-block;
+    vertical-align: top;
+}
+.fb-like span{
+    vertical-align: top !important;
+}
+
+/*gallery
+----------------------------------------------------*/
+.gallery ul {
+    letter-spacing: -1em;
+}
+.gallery ul li {
+    display: inline-block;
+    width: 48%;
+    vertical-align: top;
+    margin: 0.5%;
+    letter-spacing: normal;
+}
+.link-list dd {
+    display: inline-block;
+    font-size: 12px;
+    font-size: 1.2rem;
+    margin-right: 5px;
+}
+.ie8 .gallery ul {
+    width: 101%;
+    margin-left: -0.5%;
+}
+.ie8 .gallery ul li {
+    width: 24%;
+}
+
+/*.gallery
+----------------------------------------------------*/
+/*ページ送り
+----------------------------------------------------*/
+.gallery_pagerBottom {
+    margin-top: 1em;
+    letter-spacing: -.4em;
+}
+.gallery_pager a, .gallery_pagerBottom a, .gallery_pager span, .gallery_pagerBottom span {
+    display: inline-block;
+    font-weight: bold;
+    margin: 0 2px 2px;
+    padding: 8px 11px;
+    vertical-align: top;
+    font-size: 16px;
+    font-size: 1.6rem;
+    line-height: 1.2;
+    text-align: center;
+    font-family: ""Arial,Helvetica,ヒラギノ角ゴ Pro W3",Hiragino Kaku Gothic Pro W3,"メイリオ",Meiryo, "ＭＳ Ｐゴシック", sans-serif";
+    border: 1px solid #EBEBEB;
+    color: #999;
+    text-decoration: none;
+    letter-spacing: normal;
+}
+.gallery_pager a:hover, .gallery_pagerBottom a:hover {
+    background-color: #F0F0F0;
+    color: #000;
+}
+.gallery_pager span, .gallery_pagerBottom span {
+    color: #000 !important;
+    border: none;
+}
+.gallery .more-lists ul {
+    margin: 0
+}
+.gallery .more-lists ul li {
+    display: block;
+    width: 90%;
+    height: auto;
+    text-align: center;
+    padding: 0.5em 0;
+    font-weight: bold;
+    margin: 1em auto;
+    border: 1px solid #08107b;
+    box-sizing: border-box;
+}
+.gallery .more-lists ul li:hover {
+    opacity: 0.6;
+}
+.gallery .more-lists ul li a:hover {
+    text-decoration: none;
+}
+.gallery .more-lists p {
+    color: #08107b;
+}
+.gallery .more-lists a {
+    text-decoration: none;
+}
+.ie8 .gallery .more-lists ul {
+    letter-spacing: -1em;
+}
+.ie8 .gallery .more-lists ul li {
+    display: inline-block;
+    width: 30%;
+    margin: 0 1.55% 1em;
+    height: auto;
+    vertical-align: top;
+    letter-spacing: normal;
+}
+.ie8 .gallery .more-lists ul li a {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/*sec-magazine
+----------------------------------------------------*/
+.sec-magazine h3.title {
+    font-weight: normal;
+}
+.ie8 .sec-magazine .col01 {
+    width: 40%;
+    float: left;
+}
+.ie8 .sec-magazine .col02 {
+    width: 56.74%;
+    float: right;
+}
+
+/*sec-info
+----------------------------------------------------*/
+.sec-info ul {
+    margin-top: -40px;
+}
+.sec-info ul li {
+    margin-top: 40px;
+}
+.sec-info h3.title{
+    font-weight: normal;
+}
+.ie8 .sec-info ul {
+    letter-spacing: -1em;
+}
+.ie8 .sec-info ul li {
+    display: inline-block;
+    width: 31.3%;
+    margin-right: 3.05%;
+    vertical-align: top;
+    letter-spacing: normal;
+}
+.ie8 .sec-info ul > *:first-child +* +*,
+.ie8 .sec-info ul > *:first-child +* +* +* +* +* {
+    margin-right: 0;
+}
+
+@media screen and (min-width: 485px) {
+    /*sec-info
+    ----------------------------------------------------*/
+    .sec-info ul {
+        letter-spacing: -1em;
+    }
+    .sec-info ul li {
+        display: inline-block;
+        width: 48.37%;
+        vertical-align: top;
+        letter-spacing: normal;
+    }
+    .sec-info ul li:nth-child(odd) {
+        margin-right: 3.26%;
+    }
+}
+
+@media screen and (min-width: 600px) {
+    .section .text_02 {
+        text-align: right;
+    }
+    .gallery ul li {
+        width: 32.33%;
+    }
+    /*more-lists
+    ----------------------------------------------------*/
+    .gallery .more-lists ul {
+        letter-spacing: -1em;
+    }
+    .gallery .more-lists ul li {
+        display: inline-block;
+        width: 30%;
+        margin: 0 1.55% 1em;
+        height: auto;
+        vertical-align: top;
+        letter-spacing: normal;
+    }
+    .gallery .more-lists ul li a {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+    /*sec-magazine
+    ----------------------------------------------------*/
+    .sec-magazine .col01 {
+        width: 40%;
+        float: left;
+    }
+    .sec-magazine .col02 {
+        width: 56.74%;
+        float: right;
+    }
+}
+
+@media screen and (min-width: 801px) {
+    /*gallery
+    ----------------------------------------------------*/
+    .gallery ul {
+        width: 101%;
+        margin-left: -0.5%;
+    }
+    .gallery ul li {
+        width: 24%;
+    }
+    .gallery .more-lists ul {
+        width: 100%;
+        margin-left: 0;
+    }
+    /*sec-info
+    ----------------------------------------------------*/
+    .sec-info ul li,
+    .sec-info ul li:nth-child(odd) {
+        width: 31.3%;
+        margin-right: 3.05%;
+    }
+    .sec-info ul li:nth-child(3n) {
+        margin-right: 0;
+    }
+}
