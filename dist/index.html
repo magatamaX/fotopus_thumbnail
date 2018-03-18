@@ -1,16 +1,56 @@
+
 <!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>React Tutorial</title>
-    <link rel="stylesheet" type="text/css" href="/common/css/style.css" media="screen,tv,print">
-    <link rel="stylesheet" type="text/css" href="/shr/css/style-responsive.css" media="screen,tv,print">
-    <link rel="stylesheet" type="text/css" href="/common/css/layout.css">
-    <link rel="stylesheet" type="text/css" href="/common/css/genre_new.css">
-    <link rel="stylesheet" type="text/css" href="/tori/css/index.css">
+<!--[if IE 8]> <html class="ie8" lang="ja"> <![endif]-->
+<!--[if IE 9]> <html class="ie9" lang="ja"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="ja"> <!--<![endif]--><head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta name="author" content="Olympus Corporation">
+<meta name="robots" content="index, follow">
+<meta name="description" content="Fotopusユーザーから投稿していただいた、鳥の写真を紹介します。様々な鳥の写真が掲載されているので、お気に入りの鳥の写真を見つけてみてください。ご投稿いただいた鳥の写真はこちらに掲載されます。鳥の写真を撮ったら、ぜひ投稿してみてください。">
+<meta name="keywords" content="鳥,季節,写真">
+<meta name="copyright" content="Copyright Olympus Corporation">
+<title>鳥の写真投稿｜Fotopus（写真コミュニティフォトパス）｜オリンパス</title>
+<!--OGP-->
+<meta property="og:title" content="鳥の写真投稿｜Fotopus（写真コミュニティフォトパス）｜オリンパス">
+<meta property="og:description" content="Fotopusユーザーから投稿していただいた、鳥の写真を紹介します。様々な鳥の写真が掲載されているので、お気に入りの鳥の写真を見つけてみてください。ご投稿いただいた鳥の写真はこちらに掲載されます。鳥の写真を撮ったら、ぜひ投稿してみてください。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://fotopus.com/tori/">
+<meta property="og:image" content="https://fotopus.com/tori/images/ogImage.jpg">
+<meta property="og:site_name" content="Fotopus（写真コミュニティフォトパス）｜オリンパス">
+<meta property="fb:app_id" content="482220478462760">
+<meta property="article:publisher" content="https://www.facebook.com/FotoPus">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@olympuspenstyle">
+<link rel="canonical" href="https://fotopus.com/tori/">
+<!--/OGP-->
+<link rel="stylesheet" type="text/css" href="/common/css/style.css" media="screen,tv,print">
+<link rel="stylesheet" type="text/css" href="/shr/css/style-responsive.css" media="screen,tv,print">
+<link rel="stylesheet" type="text/css" href="/common/css/layout.css">
+<link rel="stylesheet" type="text/css" href="/common/css/genre_new.css">
+<link rel="stylesheet" type="text/css" href="/tori/css/index.css">
+<!--[if lt IE 9]>
+<script type="text/javascript" src="/top/js/html5shiv.js"></script>
+<link href="/common/css/genre_ie.css" rel="stylesheet" type="text/css">
+<![endif]-->
+<script type="text/javascript" src="/top/js/jquery.min.js"></script>
+<!-- <script type="text/javascript" src="/script/swfobject.js"></script> -->
+
+<script type="text/javascript">
+var mobile_flag = navigator.userAgent.indexOf('iPhone') > 0 || navigator.userAgent.indexOf('iPad') > 0 || navigator.userAgent.indexOf('iPod') > 0 || navigator.userAgent.indexOf('Android') > 0;
+if(mobile_flag) {
+document.write('<link href="/common/css/genre_m.css" rel="stylesheet" type="text/css">');
+}
+</script>
+
+<link rel="stylesheet" type="text/css" href="/hd/css/hd.css">
+<link rel="stylesheet" type="text/css" href="/shr/css/fotopus-layout.css" media="screen,tv,print">
+<link rel="stylesheet" type="text/css" href="/landing/css/common.css">
 </head>
+
 <body id="wrapper">
   <div id="tori">
     <div class="contents-wrapper">
@@ -21,6 +61,12 @@
       </section>
     </div>
   </div>
+  <script type="text/javascript" src="/top/js/jquery-ui-1.9.2.custom.js"></script>
+  <script type="text/javascript" src="/top/js/jquery.cookie.js"></script>
+  <script type="text/javascript" src="/top/js/jquery.init.js" charset="UTF-8"></script>
+  <script type="text/javascript" src="/top/js/jquery.gallery.js" charset="UTF-8"></script>
+  <script type="text/javascript" src="/common/js/jquery.matchHeight-min.js" charset="UTF-8"></script>
+
   <script src="/thumbnail.js"></script>
 </body>
 </html>

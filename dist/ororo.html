@@ -1,0 +1,105 @@
+<html>
+<head>
+<!-- jQueryはなくてもreactJSは動きますが、このサンプルでは使うので読み込みます -->
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="https://fb.me/react-0.13.3.js"></script>
+<script src="https://fb.me/JSXTransformer-0.13.3.js"></script>
+</head>
+<body>
+    <div id="content">
+    </div>
+    <script type="text/jsx">
+        var SearchResult = React.createClass({
+            // class名を付けたい場合はclssNameを使います
+            render: function() {
+                return (
+                    <li>
+                        <div className="photo">
+                            <img src={this.props.data.image} alt=""></img>
+                        </div>
+                        <div className="content">
+                            <p className="name">{this.props.data.name}</p>
+                        </div>
+                    </li>
+                );
+            }
+        });
+
+        var SearchResultList = React.createClass({
+            render: function() {
+                // 行数分のリストを格納したノードを生成
+                // 親ノードから受け取ったdataはpropsで受け取れます
+                var resultNodes = this.props.data.map(function (row) {
+                    return (
+                        <SearchResult data={row} />
+                    );
+                });
+
+                return (
+                     <ul>
+                        {resultNodes}
+                     </ul>
+                );
+            }
+        });
+
+        var ListBox = React.createClass({
+            // 初期値を設定します
+            getInitialState: function() {
+              return {data: [], page: 1, apiUrl: 'http://localhost:8084/'};
+            },
+            // ajaxのsuccessのfunctionにはbindが必要
+            requestData: function() {
+                $.ajax({
+                    url: this.state.apiUrl + '?page=' + this.state.page,
+                    dataType: 'json',
+                    cache: false,
+                    success: function(data) {
+                        // 既に表示しているデータと新たに取得したデータを連結して表示させる
+                        var oldData = this.state.data;
+                        var newData = oldData.concat(data.records);
+
+                        // setStateするとDOMが再構築されます
+                        this.setState({data: newData});
+                    }.bind(this)
+                });
+            },
+
+            // スクロールイベント
+            onScroll: function(detail) {
+                var scrollHeight = $(document).height();
+                var scrollPosition = $(window).height() + $(window).scrollTop();
+
+                // 画面最下部までスクロールしたタイミングで
+                if ((scrollHeight - scrollPosition) / scrollHeight === 0) {
+                    // ページ番号更新
+                    this.setState({page: this.state.page + 1});
+                    // 次のページのデータを取得
+                    this.requestData();
+                }
+            },
+
+            // このコンポーネントがDOMツリーに追加されたタイミングで呼ばれます
+            componentDidMount: function() {
+                // 1ページ目のデータを取得
+                this.requestData();
+                // ページングの処理を実装するためにスクロールイベントを追加
+                window.addEventListener('scroll', this.onScroll);
+            },
+
+            render: function() {
+                return (
+                    // SearchResultLitstのコンポーネントにdataを渡す
+                    <SearchResultList data={this.state.data} onScroll={this.onScroll} />
+                );
+            }
+        });
+
+        React.render(
+            // ListBoxというコンポーネントを指定したタグに書き出します
+            <ListBox />,
+            document.getElementById('content')
+        );
+    </script>
+</body>
+</html>

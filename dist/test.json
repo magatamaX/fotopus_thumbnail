@@ -1,7 +1,7 @@
 {
   "result":"OK",
   "err_cd":"",
-  "err_msg":"",
+  "err_msg":"通信不可能です！助けて下さい！",
   "img":[
     {
     "seq": 1,
