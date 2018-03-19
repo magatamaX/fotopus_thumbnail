@@ -292,7 +292,7 @@ class Gallery extends React.Component {
         return <p>
           {(() => {
             if ( this.state.currentPage != 0 ){
-              return <a href='javascript:void(0)' onClick={ e => this.onPageChange ( this.state.currentPage-1 ) }>前へ</a>
+              return <a key='prevBtn' href='javascript:void(0)' onClick={ e => this.onPageChange ( this.state.currentPage-1 ) }>前へ</a>
             }
           })()}
           {(() => {
@@ -300,7 +300,7 @@ class Gallery extends React.Component {
           })()}
           {(() => {
             if ( this.state.currentPage != ( this.state.totalPages ) ){
-              return <a href='javascript:void(0)' onClick={ e => this.onPageChange ( this.state.currentPage+1 ) }>次へ</a>
+              return <a key='nextBtn' href='javascript:void(0)' onClick={ e => this.onPageChange ( this.state.currentPage+1 ) }>次へ</a>
             }
           })()}
           </p>
