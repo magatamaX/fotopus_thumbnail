@@ -143,6 +143,10 @@ class Gallery extends React.Component {
         itemHeight: (size.width / 2) + 'px',
       })
     }
+    
+    this.setState({
+      currentPage: 0,
+    })
 
   }
 
