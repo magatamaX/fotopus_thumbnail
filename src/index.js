@@ -86,21 +86,21 @@ class Gallery extends React.Component {
 
   }
 
-  onPageChange( index ) {
+  onPageChange( p ) {
     // console.log( index );
     this.setState({
-      currentPage: index,
+      currentPage: p,
     })
   }
 
   onResize ( size ) {
-    
+
     const largePC = 'largePC'
     const mediumPC = 'mediumPC'
     const SP = 'SP'
 
     if( size.width >= 920 ){
-      
+
       if ( this.state.screenMode !== largePC ){
         this.setState({
           currentPage: 0,
@@ -110,7 +110,7 @@ class Gallery extends React.Component {
 
       this.setState({
         itemsPerPage: 7,
-        totalPages: Math.ceil( this.state.length / 8 ),
+        totalPages: Math.floor( (this.state.length-1) / 8 ),
         itemWidth: (920 / 4) + 'px',
         itemHeight: (920 / 4) + 'px',
       })
@@ -126,23 +126,23 @@ class Gallery extends React.Component {
 
       this.setState({
         itemsPerPage: 7,
-        totalPages: Math.ceil( this.state.length / 8 ),
+        totalPages: Math.floor( (this.state.length-1) / 8 ),
         itemWidth: (size.width / 4) + 'px',
         itemHeight: (size.width / 4) + 'px',
       })
 
     } else if ( size.width < 600 ) {
-      
+
       if ( this.state.screenMode !== SP ){
         this.setState({
           currentPage: 0,
           screenMode: SP,
         })
       }
-  
+
       this.setState({
         itemsPerPage: 3,
-        totalPages: Math.ceil( this.state.length / 4 ),
+        totalPages: Math.floor( (this.state.length-1) / 4 ),
         itemWidth: (size.width / 2) + 'px',
         itemHeight: (size.width / 2) + 'px',
       })
@@ -150,52 +150,48 @@ class Gallery extends React.Component {
     }
 
   }
-  
+
+  // 描画処理
   render () {
 
     if ( !this.state.items ) {
-      return <div className='App'>
-        現在読み込み中</div>
+      return <div className='App'>Now Loading...</div>
     }
 
+    // 写真サムネイル
     const photoList = this.state.items.map( ( e, index ) => {
 
       if ( e.result === 'NG') {
 
-        return <div className="NG" key='result_NG'>
-          <p key='err_msg'>{e.err_msg}</p>
+        const errStyle = {
+          "letter-spacing": 'normal'
+        }
+
+        return <li className="NG" key='result_NG'>
+          <p style={errStyle} key='err_msg'>{e.err_msg}</p>
           <p key='err_cd'>{e.err_cd}</p>
-        </div>
+        </li>
 
       } else {
 
-        const items_list_count = this.state.itemsPerPage;
-        // console.log(items_list_count);
+        // ページ分割用Array作成
+        const items_list = e.img
+        const new_items_list = []
 
-        let items_count = 0;
-        let page = 0;
-        let items_list = [];
-        let items_list_row = [];
+        const b = items_list.length
+        const cnt = this.state.itemsPerPage + 1
 
-        for ( let i=0; i <= this.state.length ; i++ ) {
-
-          if( items_count > items_list_count ) {
-
-            items_count = 0;
-            items_list[page] = items_list_row;
-            items_list_row = [];
-            page++;
-
-          }
-
-          items_list_row[items_count] = e.img[i];
-          items_count++;
-
+        for ( let i=0; i < Math.ceil( b / cnt ); i++) {
+          let j = i * cnt
+          let p = items_list.slice(j, j+cnt)
+          new_items_list.push(p)
         }
 
-        const imgList = items_list[this.state.currentPage].map( ( images, index ) => {
+        // console.log(new_items_list)
 
-          const style = {
+        const imgList = new_items_list[this.state.currentPage].map( ( images, index ) => {
+
+          const styleLI = {
             "overflow": 'hidden',
             "width": this.state.itemWidth,
             "height": this.state.itemHeight,
@@ -210,30 +206,8 @@ class Gallery extends React.Component {
             "width": '100%',
             "height": '100%',
           }
-          const styleLs = {
-            "height": '100%',
-            "width": 'auto',
-            "maxWidth": 'none',
-            "position": 'relative',
-            "left": '50%',
-            "top": '0',
-            "WebkitTransform": 'translateX(-50%)',
-            "MsTransform": 'translateX(-50%)',
-            "transform": 'translateX(-50%)',
-          }
-          const stylePr = {
-            "width": '100%',
-            "height": 'auto',
-            "maxHeight": 'none',
-            "position": 'relative',
-            "left": '0',
-            "top": '50%',
-            "WebkitTransform": 'translateY(-50%)',
-            "MsTransform": 'translateY(-50%)',
-            "transform": 'translateY(-50%)',
-          }
 
-          return <li style={style} key={images.nickname} className="thumb" data-index={index} data-seq={images.seq}>
+          return <li style={styleLI} key={images.nickname} className="thumb" data-index={index} data-seq={images.seq}>
             <a href={images.pageurl} style={styleA} target="_blank">
               <div style={
                 {
@@ -253,6 +227,7 @@ class Gallery extends React.Component {
       }
     })
 
+    // ページャー（数字部分）
     const pagination = this.state.items.map( e => {
 
       if ( e.result === 'NG') {
@@ -261,24 +236,47 @@ class Gallery extends React.Component {
 
       } else {
 
-        const page_list_count  = parseInt(this.state.totalPages);
+        // ページ数カウンタ
+        const page_list_count = parseInt( this.state.totalPages )
 
+        // ページリスト作成
         let list_count = 0;
         let list_row = [];
 
-        for ( let i=0; i < page_list_count; i++ ) {
+        for ( let i=0; i <= page_list_count; i++ ) {
 
           list_row[list_count] = i;
           list_count++;
 
         }
 
-        const hrefList = list_row.map( ( page, index ) => {
+        // console.log(list_row)
 
+        // 表示ページ抽出
+        let new_list_row = []
+
+        if ( list_row.length > 6 ){
+
+          if ( this.state.currentPage <= list_row[2] ){
+            new_list_row = list_row.slice(0,6)
+          } else if ( this.state.currentPage > list_row[2] && this.state.currentPage < list_row[list_row.length-3] ) {
+            new_list_row = list_row.slice(this.state.currentPage-2,this.state.currentPage+4)
+          } else if ( this.state.currentPage >= list_row[list_row.length-3]) {
+            new_list_row = list_row.slice(-6)
+          }
+
+        } else {
+          new_list_row = list_row
+        }
+        // console.log(new_list_row)
+
+        const hrefList = new_list_row.map( ( page, index ) => {
+
+          // console.log(page,index)
           let isCurrent = {};
           let isDisabled = '';
 
-          if ( index == this.state.currentPage ){
+          if ( page == this.state.currentPage ){
             isCurrent = {
                 "fontWeight": 'bold',
                 "color": '#000',
@@ -288,21 +286,33 @@ class Gallery extends React.Component {
             // console.log(page)
           }
 
-          return <a key={page} disabled={isDisabled} style={isCurrent} name={index} href='javascript:void(0)' onClick={ page => this.onPageChange( index ) }>{index+1}</a>
+          return <a key={page} disabled={isDisabled} style={isCurrent} name={page} index={index} href='javascript:void(0)' onClick={ e => this.onPageChange( page ) }>{page+1}</a>
         })
 
-        return hrefList
-
-      }
-
+        return <p>
+          {(() => {
+            if ( this.state.currentPage != 0 ){
+              return <a href='javascript:void(0)' onClick={ e => this.onPageChange ( this.state.currentPage-1 ) }>前へ</a>
+            }
+          })()}
+          {(() => {
+            return hrefList
+          })()}
+          {(() => {
+            if ( this.state.currentPage != ( this.state.totalPages ) ){
+              return <a href='javascript:void(0)' onClick={ e => this.onPageChange ( this.state.currentPage+1 ) }>次へ</a>
+            }
+          })()}
+          </p>
+        }
 
     })
 
     return (
       <div key='galleryLists'>
-        <p key='galleryPager' className="gallery_pager clearfix">{pagination}</p>
+        <div key='galleryPager' className="gallery_pager clearfix">{pagination}</div>
         <ul key='galleryImageList' className='galleryTop_photoList clearfix'>{photoList}</ul>
-        <p key='galleryPagerBottom' className="gallery_pagerBottom">{pagination}</p>
+        <div key='galleryPagerBottom' className="gallery_pagerBottom">{pagination}</div>
       </div>
     )
 
