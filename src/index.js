@@ -1,3 +1,5 @@
+import 'babel-polyfill';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -24,6 +26,7 @@ class Gallery extends React.Component {
       itemHeight: 0,
       topPartsWidth: null,
       topPartsHeight: null,
+      screenMode: null,
     }
   }
 
@@ -50,12 +53,12 @@ class Gallery extends React.Component {
       var size = this.getWindowSize()
       // console.log('your viewport size', size)
       this.onResize( size )
-    })
+    }, false )
     window.addEventListener('resize', () => {
       var size = this.getWindowSize()
       // console.log('your viewport size', size)
       this.onResize( size )
-    })
+    }, false )
 
 
     const jsonPath = path.resolve(__dirname, 'test.json')
@@ -81,35 +84,6 @@ class Gallery extends React.Component {
       length: res.body.img.length,
     })
 
-    // console.log(this.state.items)
-
-    this.setImageSize();
-  }
-
-
-  setImageSize () {
-
-    const tgt = this.state.items[0].img
-
-      var img = [], width, height, ratio
-    for ( let i=0; i<tgt.length; i++) {
-
-
-          img[i] = new Image()
-          img[i].src = tgt[i].thumblarge
-          img[i].width = img[i].width;  // 幅
-          img[i].height = img[i].height; // 高さ
-
-          if ( ( img[i].width / img[i].height ) > 1 ) {
-            //横長Landscape
-            tgt[i].orientation = 'ls'
-          } else if ( ( img[i].width / img[i].height ) <= 1 ) {
-            //縦長Portrait
-            tgt[i].orientation = 'pr'
-          }
-
-    }
-
   }
 
   onPageChange( index ) {
@@ -120,37 +94,63 @@ class Gallery extends React.Component {
   }
 
   onResize ( size ) {
+    
+    const largePC = 'largePC'
+    const mediumPC = 'mediumPC'
+    const SP = 'SP'
 
     if( size.width >= 920 ){
+      
+      if ( this.state.screenMode !== largePC ){
+        this.setState({
+          currentPage: 0,
+          screenMode: largePC,
+        })
+      }
+
       this.setState({
         itemsPerPage: 7,
         totalPages: Math.ceil( this.state.length / 8 ),
         itemWidth: (920 / 4) + 'px',
         itemHeight: (920 / 4) + 'px',
       })
-    } else if ( size.width >= 600 && size.width < 920 ){
+
+    } else if ( size.width >= 600 && size.width < 920 ) {
+
+      if ( this.state.screenMode !== mediumPC ){
+        this.setState({
+          currentPage: 0,
+          screenMode: mediumPC,
+        })
+      }
+
       this.setState({
         itemsPerPage: 7,
         totalPages: Math.ceil( this.state.length / 8 ),
         itemWidth: (size.width / 4) + 'px',
         itemHeight: (size.width / 4) + 'px',
       })
+
     } else if ( size.width < 600 ) {
+      
+      if ( this.state.screenMode !== SP ){
+        this.setState({
+          currentPage: 0,
+          screenMode: SP,
+        })
+      }
+  
       this.setState({
         itemsPerPage: 3,
         totalPages: Math.ceil( this.state.length / 4 ),
         itemWidth: (size.width / 2) + 'px',
         itemHeight: (size.width / 2) + 'px',
       })
+
     }
-    
-    this.setState({
-      currentPage: 0,
-    })
 
   }
-
-
+  
   render () {
 
     if ( !this.state.items ) {
@@ -209,7 +209,6 @@ class Gallery extends React.Component {
             "display": 'block',
             "width": '100%',
             "height": '100%',
-            "overflow": 'hidden',
           }
           const styleLs = {
             "height": '100%',
@@ -236,13 +235,16 @@ class Gallery extends React.Component {
 
           return <li style={style} key={images.nickname} className="thumb" data-index={index} data-seq={images.seq}>
             <a href={images.pageurl} style={styleA} target="_blank">
-            {(() => {
-              if ( images.orientation == 'ls' ){
-                  return <img src={images.thumblarge} alt={images.title} style={styleLs} />
-                } else {
-                  return <img src={images.thumblarge} alt={images.title} style={stylePr} />
+              <div style={
+                {
+                  "backgroundImage": 'url('+images.thumblarge+')',
+                  "backgroundRepeat": 'no-repeat',
+                  "backgroundSize": 'cover',
+                  "backgroundPosition": 'center center',
+                  "width": '100%',
+                  "height": '100%',
                 }
-              })()}
+              }></div>
             </a>
           </li>
         })
@@ -270,8 +272,6 @@ class Gallery extends React.Component {
           list_count++;
 
         }
-
-        // console.log(list_row)
 
         const hrefList = list_row.map( ( page, index ) => {
 
