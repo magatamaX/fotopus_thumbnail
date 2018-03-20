@@ -95,16 +95,15 @@ class Gallery extends React.Component {
 
   onResize ( size ) {
 
-    const largePC = 'largePC'
-    const mediumPC = 'mediumPC'
+    const PC = 'PC'
     const SP = 'SP'
 
     if( size.width >= 920 ){
 
-      if ( this.state.screenMode !== largePC ){
+      if ( this.state.screenMode !== PC ){
         this.setState({
           currentPage: 0,
-          screenMode: largePC,
+          screenMode: PC,
         })
       }
 
@@ -117,10 +116,10 @@ class Gallery extends React.Component {
 
     } else if ( size.width >= 600 && size.width < 920 ) {
 
-      if ( this.state.screenMode !== mediumPC ){
+      if ( this.state.screenMode !== PC ){
         this.setState({
           currentPage: 0,
-          screenMode: mediumPC,
+          screenMode: PC,
         })
       }
 
@@ -207,7 +206,7 @@ class Gallery extends React.Component {
             "height": '100%',
           }
 
-          return <li style={styleLI} key={images.nickname} className="thumb" data-index={index} data-seq={images.seq}>
+          return <li style={styleLI} key={images.cd} className="thumb" data-index={index} data-seq={images.seq}>
             <a href={images.pageurl} style={styleA} target="_blank">
               <div style={
                 {
@@ -289,7 +288,7 @@ class Gallery extends React.Component {
           return <a key={page} disabled={isDisabled} style={isCurrent} name={page} index={index} href='javascript:void(0)' onClick={ e => this.onPageChange( page ) }>{page+1}</a>
         })
 
-        return <p>
+        return <p key='p'>
           {(() => {
             if ( this.state.currentPage != 0 ){
               return <a key='prevBtn' href='javascript:void(0)' onClick={ e => this.onPageChange ( this.state.currentPage-1 ) }>前へ</a>
