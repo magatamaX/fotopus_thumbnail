@@ -6,9 +6,8 @@ import ReactDOM from 'react-dom';
 // SuperAgentの利用を宣言
 import request from 'superagent';
 
-// Path
-const path = require('path');
-
+// JSONパス設定
+const jsonPath = '/test.json';
 
 // サムネイルコンポーネント
 class Gallery extends React.Component {
@@ -59,9 +58,6 @@ class Gallery extends React.Component {
       // console.log('your viewport size', size)
       this.onResize( size )
     }, false )
-
-
-    const jsonPath = path.resolve(__dirname, 'test.json')
 
     // JSONデータ読み込み
     request.get(jsonPath)
