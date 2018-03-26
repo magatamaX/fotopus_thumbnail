@@ -6,8 +6,11 @@ import ReactDOM from 'react-dom';
 // SuperAgentの利用を宣言
 import request from 'superagent';
 
+// path
+const path = require('path');
+
 // JSONパス設定
-const jsonPath = '/test.json';
+const jsonPath = path.resolve(__dirname, 'test.json');
 
 // サムネイルコンポーネント
 class Gallery extends React.Component {
@@ -47,12 +50,7 @@ class Gallery extends React.Component {
   // マウントされるとき
   componentWillMount () {
 
-    // windowSize取得
-    window.addEventListener('load', () => {
-      var size = this.getWindowSize()
-      // console.log('your viewport size', size)
-      this.onResize( size )
-    }, false )
+    // リサイズ時の最大表示数変更
     window.addEventListener('resize', () => {
       var size = this.getWindowSize()
       // console.log('your viewport size', size)
@@ -79,6 +77,11 @@ class Gallery extends React.Component {
       items: [res.body],
       length: res.body.img.length,
     })
+    
+    // windowSize取得後デバイス判定の上、最大表示数を決定
+    var size = this.getWindowSize()
+    // console.log('your viewport size', size)
+    this.onResize( size )
 
   }
 
@@ -94,6 +97,7 @@ class Gallery extends React.Component {
     const PC = 'PC'
     const SP = 'SP'
 
+    // デバイス判定（PC,SP）
     if( size.width >= 920 ){
 
       if ( this.state.screenMode !== PC ){
