@@ -55,7 +55,6 @@ class Gallery extends React.Component {
     // リサイズ時の最大表示数変更
     window.addEventListener('resize', () => {
       var size = this.getWindowSize()
-      // console.log('your viewport size', size)
       this.onResize( size )
     }, false )
 
@@ -79,16 +78,14 @@ class Gallery extends React.Component {
       items: [res.body],
       length: res.body.img.length,
     })
-    
+
     // windowSize取得後デバイス判定の上、最大表示数を決定
     var size = this.getWindowSize()
-    // console.log('your viewport size', size)
     this.onResize( size )
 
   }
 
   onPageChange( p ) {
-    // console.log( index );
     this.setState({
       currentPage: p,
     })
