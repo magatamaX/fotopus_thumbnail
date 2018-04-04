@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-  mode: 'production',
+  mode: 'development',
   // 開発時はdevelopment、リリースもしくはビルド時にはproductionを記入
 
   entry: {

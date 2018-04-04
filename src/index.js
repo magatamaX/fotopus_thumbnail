@@ -33,16 +33,18 @@ class Gallery extends React.Component {
   }
 
   getWindowSize() {
-    var w = window,
+    const w = window,
           d = document,
           e = d.documentElement,
           g = d.getElementsByTagName('body')[0],
-          w = e.clientWidth || g.clientWidth || w.innerWidth,
-          h = e.clientHeight|| g.clientHeight || w.innerHeight;
+          iw = e.clientWidth || g.clientWidth || w.innerWidth,
+          ow = w.outerWidth,
+          bw = d.getElementById('gallery').clientWidth;
 
     return {
-      width: w,
-      height: h
+      width: iw,
+      outerwidth: ow,
+      baseareawidth: bw,
     }
   }
 
@@ -98,7 +100,7 @@ class Gallery extends React.Component {
     const SP = 'SP'
 
     // デバイス判定（PC,SP）
-    if( size.width >= 920 ){
+    if( size.outerwidth >= 600 ){
 
       if ( this.state.screenMode !== PC ){
         this.setState({
@@ -110,27 +112,11 @@ class Gallery extends React.Component {
       this.setState({
         itemsPerPage: 7,
         totalPages: Math.floor( (this.state.length-1) / 8 ),
-        itemWidth: (920 / 4) + 'px',
-        itemHeight: (920 / 4) + 'px',
+        itemWidth: (size.baseareawidth / 4) + 'px',
+        itemHeight: (size.baseareawidth / 4) + 'px',
       })
 
-    } else if ( size.width >= 600 && size.width < 920 ) {
-
-      if ( this.state.screenMode !== PC ){
-        this.setState({
-          currentPage: 0,
-          screenMode: PC,
-        })
-      }
-
-      this.setState({
-        itemsPerPage: 7,
-        totalPages: Math.floor( (this.state.length-1) / 8 ),
-        itemWidth: (size.width / 4) + 'px',
-        itemHeight: (size.width / 4) + 'px',
-      })
-
-    } else if ( size.width < 600 ) {
+    } else if ( size.outerwidth < 600 ) {
 
       if ( this.state.screenMode !== SP ){
         this.setState({
@@ -142,8 +128,8 @@ class Gallery extends React.Component {
       this.setState({
         itemsPerPage: 3,
         totalPages: Math.floor( (this.state.length-1) / 4 ),
-        itemWidth: (size.width / 2) + 'px',
-        itemHeight: (size.width / 2) + 'px',
+        itemWidth: (size.baseareawidth / 2) + 'px',
+        itemHeight: (size.baseareawidth / 2) + 'px',
       })
 
     }
@@ -166,10 +152,10 @@ class Gallery extends React.Component {
           "letter-spacing": 'normal'
         }
 
-        return <li className="NG" key='result_NG'>
+        return <div className="NG" key='result_NG'>
           <p style={errStyle} key='err_msg'>{e.err_msg}</p>
           <p key='err_cd'>{e.err_cd}</p>
-        </li>
+        </div>
 
       } else {
 
@@ -206,7 +192,7 @@ class Gallery extends React.Component {
             "height": '100%',
           }
 
-          return <li style={styleLI} key={images.cd} className="thumb" data-index={index} data-seq={images.seq}>
+          return <div style={styleLI} key={images.cd} className="thumb" data-index={index} data-seq={images.seq}>
             <a href={images.pageurl} style={styleA} target="_blank">
               <div style={
                 {
@@ -219,7 +205,7 @@ class Gallery extends React.Component {
                 }
               }></div>
             </a>
-          </li>
+          </div>
         })
 
         return imgList
@@ -310,7 +296,7 @@ class Gallery extends React.Component {
     return (
       <div key='galleryLists'>
         <div key='galleryPager' className="gallery_pager clearfix">{pagination}</div>
-        <ul key='galleryImageList' className='galleryTop_photoList clearfix'>{photoList}</ul>
+        <div key='galleryImageList' className='galleryTop_photoList clearfix'>{photoList}</div>
         <div key='galleryPagerBottom' className="gallery_pagerBottom">{pagination}</div>
       </div>
     )
