@@ -5,13 +5,14 @@ module.exports = {
   // 開発時はdevelopment、リリースもしくはビルド時にはproductionを記入
 
   entry: {
-      'index': [ 'babel-polyfill', path.resolve(__dirname, 'src/index.js') ]
+      'thumbnail': [ 'babel-polyfill', path.resolve(__dirname, 'src/index.js') ],
+      'pageScrollAjaxNew': [ 'babel-polyfill', path.resolve(__dirname, 'src/pageScrollAjaxNew.js') ],
   },
 
   output: {
     path: path.resolve(__dirname, 'dist'),
     publicPath: '/',
-    filename: 'thumbnail.js',
+    filename: '[name].js',
   },
 
   module: {

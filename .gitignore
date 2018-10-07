@@ -8,3 +8,4 @@ typings/*
 .sass-cache
 docs
 sftp-config.json
+npm-debug.log

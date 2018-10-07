@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="ie6" lang="ja"> <![endif]-->
+<!--[if IE 7]> <html class="ie7" lang="ja"> <![endif]-->
+<!--[if IE 8]> <html class="ie8" lang="ja"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="ja"> <!--<![endif]--><head>
+
+<!-- .tpl file path ::
+	\cgi-data\webapp\fotopus\application\modules\toppage\views\scripts\new\list.tpl
+-->
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta name="author" content="Olympus Corporation" />
+<meta name="robots" content="index, follow" />
+<meta name="keywords" content="写真,コミュニティ,ブログ,投稿,オリンパス" />
+<meta name="description" content="ブログや投稿写真で「見つける・つながる・楽しむ！」をテーマにしたオリンパスのコミュニティです。" />
+<meta name="copyright" content="Copyright Olympus Corporation" />
+<title>フォトギャラリ新着写真一覧｜Fotopus（写真コミュニティフォトパス）｜オリンパス</title>
+<link rel="stylesheet" type="text/css" href="https://fotopus.com/common/css/style.css" media="screen,tv,print" />
+<link rel="stylesheet" type="text/css" href="https://fotopus.com/shr/css/style-responsive.css" media="screen,tv,print" />
+<link rel="stylesheet" type="text/css" href="https://fotopus.com/shr/css/print.css" media="print" />
+<!-- <link href="https://fotopus.com/common/css2/gallery/seamless.css" rel="stylesheet" type="text/css" /> -->
+
+
+<!-- あたらしいCSS -->
+<link type="text/css" rel="stylesheet" href="https://fotopus.com/common/css/layout.css">
+<link type="text/css" rel="stylesheet" href="https://fotopus.com/common/image-layout_01/css/arrange.css">
+<!-- // あたらしいCSS -->
+
+
+
+
+
+
+<link rel="stylesheet" href="https://fotopus.com/script/jquery.lightbox/jquery.lightbox.css" type="text/css" media="screen,tv,print" />
+<link rel="stylesheet" type="text/css" href="https://fotopus.com/hd/css/hd.css" />
+<!--[if lt IE 9]>
+<script type="text/javascript" src="https://fotopus.com/top/js/html5shiv.js"></script>
+<link href="https://fotopus.com/common/css2/gallery/seamless_ie.css" rel="stylesheet" type="text/css" />
+<![endif]-->
+<script type="text/javascript" src="https://fotopus.com/script/swfobject.js"></script>
+
+<style type="text/css">
+#moredisplink {
+ font-size: 12px;
+ text-align:center;
+ margin:10px;
+}
+#image_list_table {
+ height:1840px;
+}
+</style>
+
+<link rel="stylesheet" type="text/css" href="https://fotopus.com/shr/css/fotopus-layout.css" media="screen,tv,print">
+</head>
+<body onLoad="" id="systmpl01">
+<div id="wrapper">
+<div id="fotopus-nav">
+
+<section id="fotopus-header-section">
+<!-- OLYMPUS LOGO HEADER GLOBAL NAV-->
+<div class="fotopus-header-olympus-logo">
+<a href="https://www.olympus-imaging.jp/" target="blank"><img src="https://fotopus.com/common/images/menu/olympus-logo.svg"></a>
+<ul class="fotopus-header-olympus-link fotopus-only-pc">
+<li><a href="https://fotopus.com/index.html/module/Toppage/action/Jump/links/sitemap">サイトマップ</a></li>
+<li><a href="http://www.olympus.co.jp/jp/" target="_blank">グループトップ</a></li>
+<li><a href="http://olympus-imaging.jp/" target="_blank">OLYMPUS IMAGING</a></li>
+</ul>
+<div id="log_status_pc" class="fotopus-header-login fotopus-only-pc">
+</div>
+<div class="fotopus-header-olympus-fixedWrap fotopus-only-pc">
+<ul id="fotopus-header-olympus-navGlobal">
+<li class="fotopus-header-olympus-home"><a href="http://olympus-imaging.jp/"><span style="height: 16px;">ホーム</span></a></li>
+<li class="fotopus-header-olympus-product"><a href="http://olympus-imaging.jp/product/"><span style="height: 16px;">製品紹介</span></a></li>
+<li class="fotopus-header-olympus-fotopus active"><a href="http://fotopus.com/"><span style="height: 16px;">コミュニティ</span></a></li>
+<li class="fotopus-header-olympus-shop"><a href="https://shop.olympus-imaging.jp/"><span style="height: 16px;">オンラインショップ</span></a></li>
+<li class="fotopus-header-olympus-events"><a href="https://fotopus.com/event_campaign/"><span style="height: 16px;">ショールーム／キャンペーン</span></a></li>
+<li class="fotopus-header-olympus-support"><a href="http://www.olympus.co.jp/jp/support/"><span style="height: 16px;">サポート／ダウンロード</span></a></li>
+</ul>
+</div>
+</div>
+
+<!-- HEADER -->
+<header class="fotopus-header">
+<div class="fotopus-header-pc-warpper">
+<div class="fotopus-header-logo-wrapper">
+<h1 class="fotopus-header-logo">
+<a href="https://fotopus.com/index.html/module/Toppage/action/Jump/links/default_action">FOTOPUS</a>
+</h1>
+</div>
+<div class="fotopus-header-item-wrapper">
+<a class="fotopus-header-item fotopus-header-item-mypage" href="https://fotopus.com/index.html/module/Toppage/action/Jump/links/mypage">MyPage</a>
+<a class="fotopus-header-item fotopus-header-item-menu" href="javascript:void(0);">メニュー<span class="fotopus-only-pc"> ▼</span></a>
+<a class="fotopus-header-item fotopus-only-pc" href="https://fotopus.com/index.html/module/Toppage/action/Jump/links/contributelibrary_action">写真投稿</a>
+<a class="fotopus-header-item fotopus-only-pc" href="https://fotopus.com/index.html/module/Toppage/action/Jump/links/photosearch_action/">写真検索</a>
+<a class="fotopus-header-item fotopus-only-pc" href="https://fotopus.com/index.html/module/Toppage/action/Jump/links/mypage">MyPage</a>
+<a class="fotopus-header-item fotopus-only-pc" href="https://fotopus.com/index.html/module/Toppage/action/Jump/links/user_reg/">製品ユーザー登録</a>
+</div>
+</div>
+</header>
+</section>
+
+<!-- MENU -->
+<section id="fotopus-menu-section">
+<div id="fotopus-menu-section-warpper">
+<!-- close btn sp -->
+<button class="fotopus-menu-close-button fotopus-only-sp">
+<span class="visuallyhidden">メニューを閉じる</span>
+</button>
+<!-- menu list -->
+<div class="fotopus-menu">
+<div class="fotopus-menu-content fotopus-menu-content-list">
+<!-- close btn pc -->
+<button class="fotopus-menu-close-button-pc fotopus-only-pc">
+<span class="fotopus-menu-close">閉じる</span>
+</button>
+
+<ul class="fotopus-menu-list fotopus-only-sp">
+<li class="fotopus-menu-list-item"><a class="fotopus-menu-signup" href="https://fotopus.com/index.html/module/Toppage/action/Jump/links/user_reg/">製品ユーザー登録</a></li>
+<li id="log_status_sp" class="fotopus-menu-content-signin">
+</li>
+<li class="fotopus-menu-list-item"><a href="https://fotopus.com/index.html/module/Toppage/action/Jump/links/mypage">MyPage</a></li>
+<li class="fotopus-menu-list-item"><a href="https://fotopus.com/index.html/module/Toppage/action/Jump/links/contributelibrary_action">写真投稿</a></li>
+<li class="fotopus-menu-list-item"><a href="https://fotopus.com/index.html/module/Toppage/action/Jump/links/photosearch_action/">写真検索</a></li>
+</ul>
+<ul class="fotopus-menu-list fotopus-menu-list-drop">
+<li class="fotopus-menu-list-item"><a href="javascript:void(0);"><span>フォトパスについて</span></a>
+<ul class="menu-list01">
+<li><a href="https://fotopus.com/index.html/module/Toppage/action/Jump/links/default_action">フォトパストップ</a></li>
+<li><a href="https://fotopus.com/index.html/module/Toppage/action/Jump/links/enjoy">フォトパスの楽しみ方</a></li>
+<li><a href="https://fotopus.com/index.html/module/Toppage/action/Jump/links/ZendMyfotopusAbout">フォトパス会員への新規ご登録</a></li>
+<li><a href="https://fotopus.com/index.html/module/Toppage/action/Jump/links/rule/">ご利用規約</a></li>
+<li><a href="https://fotopus.com/index.html/module/Toppage/action/Jump/links/rule_zuiko/">会員規約</a></li>
+<li><a href="https://fotopus.com/index.html/module/Toppage/action/Jump/links/faq_action/">よくあるご質問</a></li>
+</ul>
+</li>
+<li class="fotopus-menu-list-item"><a href="javascript:void(0);"><span>コンテンツ</span></a>
+<ul class="menu-list02">
+<li><a href="https://fotopus.com/index.html/module/Toppage/action/Jump/links/ZendToppageRankingSakuhin">今週の作品賞</a></li>
+<li><a href="https://fotopus.com/index.html/module/Toppage/action/Jump/links/ZendToppageRankingPopular">人気写真</a></li>
+<li><a href="https://fotopus.com/index.html/module/Toppage/action/Jump/links/magazine/">写真撮影テクニック</a></li>
+<li><a href="https://fotopus.com/index.html/module/Toppage/action/Jump/links/session/">フォトコンテスト</a></li>
+<li><a href="https://fotopus.com/index.html/module/Toppage/action/Jump/links/salon/">Web 写真展</a></li>
+<li><a href="https://fotopus.com/index.html/module/Toppage/action/Jump/links/park/">フォトパスパーク</a></li>
+<li><a href="https://fotopus.com/index.html/module/Toppage/action/Jump/links/worldtour/">ワールドツアー</a></li>
+<li><a href="https://fotopus.com/index.html/module/Toppage/action/Jump/links/commu">フォトパス コミュ</a></li>
+<li><a href="https://fotopus.com/index.html/module/Toppage/action/Jump/links/commuDiary/">みんなの新着日記</a></li>
+<li><a href="https://fotopus.com/index.html/module/Toppage/action/Jump/links/mail_fotopus/">メールマガジン</a></li>
+</ul>
+</li>
+<li class="fotopus-menu-list-item"><a href="javascript:void(0);"><span>ジャンル</span></a>
+<ul class="menu-list06">
+<li><a href="https://fotopus.com/fukei/">風景</a></li>
+<li><a href="https://fotopus.com/tori/">鳥</a></li>
+<li><a href="https://fotopus.com/tetsudo/">鉄道</a></li>
+<li><a href="https://fotopus.com/jinbutsu/">人物</a></li>
+<li><a href="https://fotopus.com/sekaiisan/">世界遺産</a></li>
+<li><a href="https://fotopus.com/travel/">旅行</a></li>
+<li><a href="https://fotopus.com/inu/">犬</a></li>
+</ul>
+<ul class="menu-list06">
+<li><a href="https://fotopus.com/hanabi/">花火</a></li>
+<li><a href="https://fotopus.com/hana/">花</a></li>
+<li><a href="https://fotopus.com/hoshi/">星空</a></li>
+<li><a href="https://fotopus.com/neko/">猫</a></li>
+<li><a href="https://fotopus.com/marine/">水中</a></li>
+<li><a href="https://fotopus.com/yakei/">夜景</a></li>
+<li><a href="https://fotopus.com/mushi/">昆虫</a></li>
+</ul>
+</li>
+<li class="fotopus-menu-list-item-2line">
+<ul>
+<li class="fotopus-menu-list-item"><a href="javascript:void(0);"><span>関連サイト</span></a>
+<ul class="menu-list03">
+<li><a href="https://fotopus.com/index.html/module/Toppage/action/Jump/links/showroomgallery/">ショールーム</a></li>
+<li><a href="https://fotopus.com/index.html/module/Toppage/action/Jump/links/college">デジタルカレッジ</a></li>
+<li><a href="http://olympus-imaging.jp/product/">製品紹介</a></li>
+<li><a href="https://shop.olympus-imaging.jp/">オンラインショップ</a></li>
+<li><a href="https://fotopus.com/sweetphoto/">SWEET PHOTO</a></li>
+<li><a href="https://fotopus.com/index.html/module/Toppage/action/Jump/links/olympuslive/">オリンパスライブ</a></li>
+<li><a href="https://fotopus.com/index.html/module/Toppage/action/Jump/links/premium">ズイコークラブ支部</a></li>
+</ul>
+</li>
+<li class="fotopus-menu-list-item"><a href="javascript:void(0); "><span>SNS</span></a>
+<ul class="menu-list04">
+<li><a href="https://fotopus.com/exlink.php?https://www.facebook.com/FotoPus/" target="blank">Facebook</a></li>
+<li><a href="https://fotopus.com/exlink.php?https://twitter.com/olympuspenstyle" target="blank">Twitter</a></li>
+<li><a href="https://fotopus.com/exlink.php?https://www.instagram.com/sweetphoto_olympus/" target="blank">Instagram</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="fotopus-menu-list-item"><a href="javascript:void(0);"><span>WEBマガジン</span></a>
+<ul class="menu-list05">
+<li><a href="https://fotopus.com/index.html/module/Toppage/action/Jump/links/toughfield/">ToughField</a></li>
+<li><a href="https://fotopus.com/index.html/module/Toppage/action/Jump/links/naviblog/">ナビゲーターズ ブログ</a></li>
+<li><a href="https://fotopus.com/index.html/module/Toppage/action/Jump/links/focusGallery/">フォーカスギャラリー</a></li>
+<li><a href="https://fotopus.com/index.html/module/Toppage/action/Jump/links/season/">今月のテーマ</a></li>
+</ul>
+</li>
+</ul>
+<ul class="fotopus-menu-list fotopus-newsletter-signup fotopus-only-sp">
+<li class="fotopus-menu-list-item"><a href="https://fotopus.com/index.html/module/Toppage/action/Jump/links/mail_fotopus/" class="F_icon-letter">メルマガ登録</a></li>
+</ul>
+<ul class="fotopus-menu-list fotopus-log fotopus-only-sp">
+<li id="loginBtn" class="fotopus-menu-list-item">
+<form method="post" id="login" name="login">
+<span class="F_icon-login">ログイン</span>
+</form>
+</li>
+</ul>
+</div>
+<!-- end fotopus-menu-content-list -->
+<!-- menu footer -->
+<div class="fotopus-menu-content fotopus-menu-footer fotopus-only-sp">
+<a href="http://www.olympus.co.jp/jp/" target="blank"><img src="https://fotopus.com/common/images/menu/olympus-logo.svg"></a>
+<table>
+<tr>
+<td class="fotopus-footer-td-first"><a href="http://olympus-imaging.jp/">ホーム</a></td>
+<td><a href="http://olympus-imaging.jp/product/">製品紹介</a></td>
+</tr>
+<tr>
+<td class="fotopus-footer-td-first"><a href="http://fotopus.com/">コミュニティ</a></td>
+<td><a href="https://shop.olympus-imaging.jp/">オンラインショップ</a></td>
+</tr>
+<tr>
+<td class="fotopus-footer-td-first"><a href="https://fotopus.com/event_campaign/">ショールーム／キャンペーン</a></td>
+<td><a href="http://www.olympus.co.jp/jp/support/">サポート／ダウンロード</a></td>
+</tr>
+<tr class="fotopus-footer-tr-last">
+<td class="fotopus-footer-td-first"><a href="http://www.olympus.co.jp/jp/">グループトップ</a></td>
+<td><a href="https://fotopus.com/index.html/module/Toppage/action/Jump/links/sitemap">サイトマップ</a></td>
+</tr>
+</table>
+</div><!-- end fotopus-menu-footer -->
+</div><!-- end fotopus-menu -->
+</div><!-- end fotopus-menu-section-warpper -->
+</section>
+
+<!-- link-->
+<section id="fotopus-pankuzu-link-section">
+<div class="fotopus-pankuzu-warpper">
+<div class="fotopus-pankuzu">
+見つける・つながる・楽しむ！ <br>写真投稿コミュニティ「Fotopus」
+</div>
+<div class="fotopus-newsletter-link fotopus-only-pc">
+<a href="https://fotopus.com/index.html/module/Toppage/action/Jump/links/mail_fotopus/" class="F_icon-letter">メルマガ登録</a>
+</div>
+</div>
+</section>
+</div>
+
+<div class="cont">
+<header>
+
+<div class="copy">
+
+</div>
+<div class="topicPath clearfix">
+<p><a href="http://olympus-imaging.jp/index.html">ホーム</a> &gt; <a href="https://fotopus.com/index.html/module/Toppage/action/Jump/links/default_action">写真投稿コミュニティ フォトパスTOP</a> &gt; <h1>フォトギャラリ新着写真一覧</h1></div>
+</header>
+
+<section class="sec01 clearfix">
+<h2>フォトギャラリ新着写真一覧</h2>
+<div id="newflashButton"><img src="https://fotopus.com/images/design_img/top/btn_galleryD.gif" alt="HDスライド" width="101" height="20" />
+<script type="text/javascript">
+var so = new SWFObject("/common/gallery/hdslide/hivision2.swf", "img", "101", "20", "9", "#FFFFFF");
+	so.addParam("allowFullScreen", "true");
+	so.addParam("quality", "best");
+	so.addParam("menu", "false");
+	so.addParam("wmode", "transparent");
+	so.addVariable("xmlUrl", "https://fotopus.com/index.html/module/Similar/action/HdDetail/t/1000");
+	so.write("newflashButton");
+</script>
+</div>
+<p id="hdButton"><a id="hdstart" href="#">HDスライド</a></p>
+</section><!-- /.sec01 -->
+
+<!-- /.cont -->
+</div><!-- /.cont -->
+<!-- /.cont -->
+
+
+<!-- image-list component -->
+<div id="js-pageScrollAjax" class="image_list_area"></div>
+<!-- // image-list component -->
+
+
+<!-- .cont again -->
+<div class="cont"><!-- .cont again -->
+<!-- .cont again -->
+
+<aside class="col05 cf">
+<ul>
+<li><a href="http://cameras.olympus.com/ja-jp/omd" target="_blank"><img src="https://fotopus.com/top/images/img02_02.jpg" height="146" width="183" alt="OLYMPUS OM-D"></a></li>
+<li class="footer_border"><a href="http://cameras.olympus.com/pen/ja-jp/" target="_blank"><img src="https://fotopus.com/top/images/img02_06.jpg" height="146" width="183" alt="OLYMPUS PEN"></a></li>
+<li class="footer_border"><a href="http://cameras.olympus.com/ja-jp/stylus" target="_blank"><img src="https://fotopus.com/top/images/img02_04.jpg" height="146" width="183" alt="STYLUS"></a></li>
+<li class="footer_border"><a href="http://cameras.olympus.com/ja-jp/zuiko" target="_blank"><img src="https://fotopus.com/top/images/img02_05.jpg" height="146" width="183" alt="ZUIKO"></a></li>
+</ul>
+</aside>
+<p class="pagetop01"><a class="pagetop02" href="#top">ページトップへ戻る</a></p>
+<!--cont-->
+</div>
+<footer>
+<div class="col_footer">
+<div class="col_footer01">
+<ul>
+<li><a href="https://fotopus.com/index.html/module/Toppage/action/Jump/links/sitemap">サイトマップ</a></li>
+<!--<li><a href="#"><img src="images/img_twitter_02.png" height="29" width="30" alt=""></a></li>
+<li><a href="#"><img src="images/img_facebook_02.png" height="29" width="30" alt=""></a></li>-->
+</ul>
+</div><!-- / .col_footer01 -->
+<div class="col_footer02">
+<ul>
+<li><a href="http://www.olympus.co.jp/jp/corc/" target="_blank">企業情報</a></li>
+<li><a href="http://olympus-imaging.jp/notice/policy.html" target="_blank">このウェブサイトについて</a></li>
+<li><a href="https://fotopus.com/index.html/module/Toppage/action/Jump/links/faq_action">FAQ</a></li>
+<li><a href="https://fotopus.com/index.html/module/Toppage/action/Jump/links/legal_info/">「特定商取引に関する法律」に基づく表示</a></li>
+<li><a href="https://fotopus.com/index.html/module/Toppage/action/Jump/links/rule">フォトパスご利用規約</a></li>
+<li><a href="https://fotopus.com/index.html/module/Toppage/action/Jump/links/rule_zuiko">フォトパス会員規約</a></li>
+<li><a onClick="window.open('/index.html/module/Toppage/action/Jump/links/contact','contact','status=yes,scrollbars=yes,resizable=yes,width=500,height=600')" href="javascript:void(0)">お問合せ</a></li>
+</ul>
+</div><!-- / .col_footer02 -->
+<address>
+© 2014 Olympus Corporation
+</address>
+</div><!-- / .col_footer -->
+</footer>
+</div><!-- / #wrapepr -->
+<script type="text/javascript" src="https://fotopus.com/top/js/jquery.min.js"></script>
+<script type="text/javascript" src="https://fotopus.com/top/js/jquery-ui-1.9.2.custom.js"></script>
+<script type="text/javascript" src="https://fotopus.com/top/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="https://fotopus.com/top/js/jquery.nailthumb.1.1.js"></script>
+<script type="text/javascript" src="https://fotopus.com/top/js/jquery.init.js" charset="UTF-8"></script>
+<script type="text/javascript" src="https://fotopus.com/script/jquery.lightbox/jquery.lightbox.js?20160525"></script>
+
+
+
+<script language="JavaScript" type="text/JavaScript">
+<!--
+var mobile_flag = navigator.userAgent.indexOf('iPhone') > 0 || navigator.userAgent.indexOf('iPad') > 0 || navigator.userAgent.indexOf('iPod') > 0 || navigator.userAgent.indexOf('Android') > 0;
+if(mobile_flag) {
+document.write('<link href="https://fotopus.com/common/css2/gallery/seamless_m.css" rel="stylesheet" type="text/css" />');
+}
+function MM_openBrWindow(theURL,winName,features) { //v2.0
+	window.open(theURL,winName,features);
+}
+//-->
+</script>
+
+
+<script language="JavaScript" type="text/JavaScript"><!--
+schollInit();
+//--></script>
+
+<script>
+var xmlval = "https://fotopus.com/index.html/module/Similar/action/HdDetail/t/1000"; </script>
+
+<script src="https://fotopus.com/hd/js/hd_slide.js"></script>
+<script type="text/javascript" src="https://fotopus.com/shr/js/fotopus-layout.js"></script>
+
+
+
+
+
+<script src="./common/js/arrange_.js"></script>
+<!-- image-list javascript file -->
+<script type="text/javascript" src="./common/js/pageScrollAjaxNew.js"></script>
+<!-- // image-list javascript file -->
+<script>
+function triggerArrangeImage () {
+    $('#imgLists').arrangeImage({
+        imageNum: 4,
+        marginBottom: -4,
+    }); 
+}
+</script>
+
+    
+
+</body>
+</html>
