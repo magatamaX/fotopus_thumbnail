@@ -37,10 +37,12 @@
 
 <link rel="stylesheet" href="https://fotopus.com/script/jquery.lightbox/jquery.lightbox.css" type="text/css" media="screen,tv,print" />
 <link rel="stylesheet" type="text/css" href="https://fotopus.com/hd/css/hd.css" />
-<!--[if lt IE 9]>
-<script type="text/javascript" src="https://fotopus.com/top/js/html5shiv.js"></script>
-<link href="https://fotopus.com/common/css2/gallery/seamless_ie.css" rel="stylesheet" type="text/css" />
-<![endif]-->
+
+
+<link rel="stylesheet" href="https://fotopus.com/shr/css/fotopus-layout.css" media="screen,tv,print">
+<link rel="stylesheet" href="https://fotopus.com/photogallery/css/common.css">
+
+
 <script type="text/javascript" src="https://fotopus.com/script/swfobject.js"></script>
 
 <style type="text/css">
@@ -263,25 +265,28 @@
 <p><a href="http://olympus-imaging.jp/index.html">ホーム</a> &gt; <a href="https://fotopus.com/index.html/module/Toppage/action/Jump/links/default_action">写真投稿コミュニティ フォトパスTOP</a> &gt; <h1>フォトギャラリ新着写真一覧</h1></div>
 </header>
 
-<section class="sec01 clearfix">
-<h2>フォトギャラリ新着写真一覧</h2>
-<div id="newflashButton"><img src="https://fotopus.com/images/design_img/top/btn_galleryD.gif" alt="HDスライド" width="101" height="20" />
-<script type="text/javascript">
-var so = new SWFObject("/common/gallery/hdslide/hivision2.swf", "img", "101", "20", "9", "#FFFFFF");
-	so.addParam("allowFullScreen", "true");
-	so.addParam("quality", "best");
-	so.addParam("menu", "false");
-	so.addParam("wmode", "transparent");
-	so.addVariable("xmlUrl", "https://fotopus.com/index.html/module/Similar/action/HdDetail/t/1000");
-	so.write("newflashButton");
-</script>
-</div>
-<p id="hdButton"><a id="hdstart" href="#">HDスライド</a></p>
-</section><!-- /.sec01 -->
 
 <!-- /.cont -->
 </div><!-- /.cont -->
 <!-- /.cont -->
+
+
+<!-- あたらしいHTML --><!-- あたらしいHTML --><!-- あたらしいHTML -->
+
+<div class="contents-wrapper">
+<div class="section introduction border-line">
+<div class="section-inner type_02 text_01">
+<h1 class="title text_large">フォトギャラリ新着写真一覧</h1>
+</div><!--section-inner-->
+</div><!--section-->
+<div class="section floating-wrap">
+<div class="section-inner column-layout">
+<p id="hdButton" class="floating"><a id="hdstart" class="button hd oly-blue" href="#">HDスライド</a></p>
+</div><!--section-inner-->
+</div><!--section-->
+</div><!-- ./contents-wrapper -->
+
+<!-- // あたらしいHTML --><!-- // あたらしいHTML --><!-- // あたらしいHTML --><!-- // あたらしいHTML -->
 
 
 <!-- image-list component -->
