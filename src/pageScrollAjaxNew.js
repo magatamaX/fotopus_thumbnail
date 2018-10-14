@@ -89,8 +89,6 @@ class ImageList extends React.Component {
       return
     }
 
-    console.log(res.body.img);
-
     if ( type === 'init' ) {
 
       // ステート更新
@@ -118,7 +116,11 @@ class ImageList extends React.Component {
         {res.map( ( item, index ) => {
           return (
             <div key={item.cd} className={`arrange-item`}>
-              <span className="arrange-item-album-icon"></span>
+              { item.photo_total > 1 ? (
+                <span className="arrange-item-album-icon"></span>
+              ): (
+                ''
+              )}
               <a href={item.pageurl}>
                 <img src={item.thumbnail} alt={item.img_alt} />
                 <div className="photo-info">
@@ -185,15 +187,23 @@ class ImageList extends React.Component {
   // 描画処理
   render () {
 
-    if ( !this.state.init_img ) {
-      return <div className='nophoto_msg'>No Photo.</div>
+    if ( this.state.init_img.length === 0 ) {
+      return (
+        <div className={`arrange-contents`}>
+          <div className="loader"><div className="loading"></div></div>
+        </div>
+      )
     }
 
     const initItems = this.state.init_img.map( ( item, index ) => {
 
       return (
         <div key={item.cd} className={`arrange-item`}>
-          <span className="arrange-item-album-icon"></span>
+          { item.photo_total > 1 ? (
+            <span className="arrange-item-album-icon"></span>
+          ): (
+            ''
+          )}
           <a href={item.pageurl}>
             <img src={item.thumbnail} alt={item.img_alt} />
             <div className="photo-info">
@@ -218,7 +228,7 @@ class ImageList extends React.Component {
         <div className="moreButton section-inner type_03 text_01">
           { (this.state.moreButton) ? (
             <p>
-              <a href="javascript:void(0)" className="button" onClick={e => this.onClickMoreButton()}>もっとみる（？？枚）</a>
+              <a href="javascript:void(0)" className="button" onClick={e => this.onClickMoreButton()} style={{minWidth: `200px`}}>もっと見る</a>
             </p>
           ):(
             ''
@@ -233,7 +243,8 @@ class ImageList extends React.Component {
 
 const targetElement = document.getElementById('js-pageScrollAjax');
 if ( targetElement ) {
-  const dataset = JSON.parse(JSON.stringify(targetElement.dataset));
+  let dataset;
+  if ( targetElement.dataset ) dataset = JSON.parse(JSON.stringify(targetElement.dataset));
   ReactDOM.render(
     <ImageList
       loadFunc={
