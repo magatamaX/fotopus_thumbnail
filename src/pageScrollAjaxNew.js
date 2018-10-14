@@ -1,5 +1,4 @@
 import 'babel-polyfill';
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -9,15 +8,6 @@ import request from 'superagent';
 // path
 const path = require('path');
 
-// 最初に呼び出す枚数
-const init_set_num = 100;
-// 以降の呼び出し枚数
-const more_set_num = 50;
-
-// JSONパス設定
-const initJsonPath = path.resolve(__dirname, 'api/photos/new/start/0/limit/' + init_set_num + '/');
-
-
 // サムネイルコンポーネント
 class ImageList extends React.Component {
 
@@ -26,159 +16,191 @@ class ImageList extends React.Component {
     // ステート初期化
     this.state = {
       // init
-      init_result: '',
-      init_err_cd: '',
-      init_err_msg: '',
       init_img: [],
-      init_length: 0,
       init_load: false,
-      init_load_count: 0,
-
       // more
-      more_result: '',
-      more_err_cd: '',
-      more_err_msg: '',
-      more_img: [],
-      more_load: false,
+      moreItems: [],
       more_load_count: 0,
-
-      more_first_num: init_set_num,
-
-      moreCount: 0,
+      next_more_first_num: 0,
       moreButton: true,
+      // messages
+      message: '',
     }
+    // スクロールで呼び出しフラグ
+    this.handleScrollFlag = false;
 
-    console.log(props)
+    // 最初に呼び出す枚数
+    this.init_set_num = props.initNum ? Number(props.initNum) : 100;
+    // 追加分の呼び出し枚数
+    this.more_set_num = props.moreNum ? Number(props.moreNum) : 50;
+    // URLクエリがあれば設定
+    this.query = props.query ? props.query : '';
+    // 追加分を読込を発火する位置の範囲（下からの割合）
+    this.scroll_range = props.scrollRange ? Number(props.scrollRange) : 0.3;
+    // ロードしてからフラグ切替までのタイムラグ
+    this.flagInterval = props.flagInterval ? Number(props.flagInterval) : 300;
+
   }
 
   // マウントされるとき
   componentWillMount () {
 
+    // JSONパス
+    const initJsonPath = path.resolve(__dirname, 'api/photos/new/start/0/limit/' + this.init_set_num + '/' + this.query);
+
     // JSONデータ読み込み
     request.get(initJsonPath)
       .accept('application/json')
       .end( ( err, res ) => {
-        this.loadedJSON( err, res, 'init' )
-      })
+        this.loadedJSON( err, res, 'init' );
+        this.setState({
+          next_more_first_num: this.init_set_num,
+        })
+      });
   }
 
   // 追加リクエストのとき
   moreLoadRequest (num) {
 
-    const morePath = path.resolve(__dirname, 'api/photos/new/start/'+ num +'/limit/' + more_set_num + '/');
-    console.log(morePath);
+    const morePath = path.resolve(__dirname, 'api/photos/new/start/'+ num +'/limit/' + this.more_set_num + '/' + this.query);
 
     request.get(morePath)
     .accept('application/json')
     .end( ( err, res ) => {
-      this.loadedJSON( err, res, 'more' )
-      this.setState({
-        more_first_num: num + more_set_num,
-      })
-    })    
+      this.loadedJSON( err, res, 'more', num )
+    })
   }
 
   // データを読み込んだとき
-  loadedJSON ( err, res, type ) {
+  loadedJSON ( err, res, type, num = 0 ) {
     if ( err ) {
-      console.log('データ読み込みに失敗しました。')
+      console.error('データ読み込みに失敗しました。' + err.message);
       return
     }
 
-    console.log(res.body);
-
-    if ( type === 'init' ) {
-      // ステート更新
+    // JSON NGもしくは写真が０のとき
+    if ( res.body.result === "NG") {
+      console.error('データを取得できませんでした。err_cd:' + res.body.err_cd + ', message:' + res.body.err_msg );
+      return
+    } else if (  res.body.img.length === 0 ) {
       this.setState({
-          init_result: res.body.result,
-          init_err_cd: res.body.err_cd,
-          init_err_msg: res.body.err_msg,
-          init_img: res.body.img,
-          init_length: res.body.img.length,
-          
-          init_load: true,
+        message: 'No Photo left.',
       })
-    } else if ( type === 'more' ) {
-        this.setState({
-          more_result: res.body.result,
-          more_err_cd: res.body.err_cd,
-          more_err_msg: res.body.err_msg,
-          more_img: res.body.img,
-          more_length: res.body.img.length,
-          
-          more_load: true,
-          more_load_count: this.state.more_load_count + 1,
-      })    
+      return
     }
 
+    console.log(res.body.img);
 
-    console.log(this.state);
-    // windowSize取得後デバイス判定の上、最大表示数を決定
+    if ( type === 'init' ) {
+
+      // ステート更新
+      this.setState({
+        init_img: res.body.img,
+        init_load: true,
+      });
+
+    } else if ( type === 'more' ) {
+
+      // ステート更新
+      this.setState({
+        next_more_first_num: num + this.more_set_num,
+        moreItems: this.state.moreItems.concat(this.moreItem(this.state.more_load_count, res.body.img)),
+        more_load_count: this.state.more_load_count + 1,
+      });
+
+    }
     
   }
 
-
-  onImageLoad(count) {
-
-    this.setState({
-      init_load_count: count + 1,
-    })
-
-    if ( count + 1 == this.state.init_length ) {
-      console.log('すべてロードされました。')
-      // this.setState({
-      //   init_load: true,
-      // })
-    }
-
+  moreItem (id, res) {
+    return (
+      <div id={`moreImgList${id}`} key={id}>
+        {res.map( ( item, index ) => {
+          return (
+            <div key={item.cd} className={`arrange-item`}>
+              <span className="arrange-item-album-icon"></span>
+              <a href={item.pageurl}>
+                <img src={item.thumbnail} alt={item.img_alt} />
+                <div className="photo-info">
+                  <p>{item.title}</p>
+                  <br />
+                  <p className="nickname">ニックネーム：{item.nickname}</p>
+                </div>
+              </a>
+            </div>
+          )
+        })}
+      </div>
+    );   
   }
+
 
   componentDidUpdate ( prevProps, prevState ) {
     if ( prevState.init_load === false && this.state.init_load === true ) {
-      console.log('all loaded!')
-      this.props.loadFunc();
+      this.props.loadFunc('#InitImgList');
     }
 
-    // if ( prevState.more_load_count !== this.state.more_load_count ) {
-    //   console.log('all loaded!')
-    //   this.props.loadFunc();
-    // }
+    if ( prevState.more_load_count !== this.state.more_load_count ) {
+
+      const argument = `#moreImgList${prevState.more_load_count}`
+
+      this.props.loadFunc(argument, ()=> {
+        setTimeout(()=>{
+          this.handleScrollFlag = false;
+        }, this.flagInterval);
+      });
+      
+    }
+
+    if ( prevState.moreButton === true && this.state.moreButton === false ) {
+      window.addEventListener('scroll', (e) => { this.handleScroll(e)}, false);
+      window.addEventListener('resize', (e) => { this.handleScroll(e)}, false);
+    }
   }
 
-  onClickMoreButton ( count ) {
-    console.log(count)
+  onClickMoreButton ( ) {
+
     this.setState({
-      moreCount: count + 1,
-      // moreButton: !this.state.moreButton,
-    })
-    this.moreLoadRequest(this.state.more_first_num)
+      moreButton: false,
+    });
+
+    this.moreLoadRequest(this.state.next_more_first_num);
+
+  }
+
+  handleScroll (e) {
+
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const scrollHeight = document.body.clientHeight;
+    const scrollPosition = scrollTop + window.innerHeight;
+
+    if((scrollHeight - scrollPosition) / scrollHeight <= this.scroll_range ){
+      if ( !this.handleScrollFlag ) {
+        this.handleScrollFlag = true;
+        this.moreLoadRequest(this.state.next_more_first_num)
+      }
+    }
   }
 
   // 描画処理
   render () {
 
     if ( !this.state.init_img ) {
-      return <div className='App'>Now Loading...</div>
+      return <div className='nophoto_msg'>No Photo.</div>
     }
 
-    const arrangeItem = this.state.init_img.map( ( item, index ) => {
+    const initItems = this.state.init_img.map( ( item, index ) => {
 
       return (
         <div key={item.cd} className={`arrange-item`}>
-          <a href={item.pageurl}>
-            <img onLoad={e => this.onImageLoad(this.state.init_load_count)} src={item.thumbnail} alt={item.img_alt} />
-          </a>
-        </div>
-      )
-           
-    })
-
-    const moreItem = this.state.more_img.map( ( item, index ) => {
-
-      return (
-        <div key={item.cd} className={`arrange-item`}>
+          <span className="arrange-item-album-icon"></span>
           <a href={item.pageurl}>
             <img src={item.thumbnail} alt={item.img_alt} />
+            <div className="photo-info">
+              <p>{item.title}</p>
+              <br />
+              <p className="nickname">ニックネーム：{item.nickname}</p>
+            </div>
           </a>
         </div>
       )
@@ -188,15 +210,15 @@ class ImageList extends React.Component {
     return (
       <div>
         <div className="arrange-contents">
-          <div id="imgLists">
-            {arrangeItem}
-            {moreItem}
+          <div id="InitImgList">
+            {initItems}
           </div>
+          {this.state.moreItems}
         </div>
         <div className="moreButton section-inner type_03 text_01">
           { (this.state.moreButton) ? (
             <p>
-              <a href="javascript:void(0)" className="button" onClick={e => this.onClickMoreButton(this.state.moreCount)}>もっとみる（？？枚）</a>
+              <a href="javascript:void(0)" className="button" onClick={e => this.onClickMoreButton()}>もっとみる（？？枚）</a>
             </p>
           ):(
             ''
@@ -209,7 +231,19 @@ class ImageList extends React.Component {
 
 }
 
-ReactDOM.render(
-  <ImageList loadFunc={()=>{triggerArrangeImage()}} />,
-  document.getElementById('js-pageScrollAjax')
-);
+const targetElement = document.getElementById('js-pageScrollAjax');
+if ( targetElement ) {
+  const dataset = JSON.parse(JSON.stringify(targetElement.dataset));
+  ReactDOM.render(
+    <ImageList
+      loadFunc={
+        ( target, callback = () => {} )=>{
+          triggerArrangeImage( target );
+          callback();
+        }
+      }
+      {...dataset}
+    />,
+    targetElement
+  );
+}

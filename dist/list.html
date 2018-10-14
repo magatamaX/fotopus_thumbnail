@@ -285,7 +285,14 @@ var so = new SWFObject("/common/gallery/hdslide/hivision2.swf", "img", "101", "2
 
 
 <!-- image-list component -->
-<div id="js-pageScrollAjax" class="image_list_area"></div>
+<div
+	id="js-pageScrollAjax"
+	class="image_list_area"
+	data-init-num="100"
+	data-more-num="50"
+	data-query="file.json"
+	data-scroll-range="0.1"
+></div>
 <!-- // image-list component -->
 
 
@@ -353,7 +360,7 @@ function MM_openBrWindow(theURL,winName,features) { //v2.0
 
 
 <script language="JavaScript" type="text/JavaScript"><!--
-schollInit();
+// schollInit();
 //--></script>
 
 <script>
@@ -368,11 +375,14 @@ var xmlval = "https://fotopus.com/index.html/module/Similar/action/HdDetail/t/10
 
 <script src="./common/js/arrange_.js"></script>
 <!-- image-list javascript file -->
-<script type="text/javascript" src="./common/js/pageScrollAjaxNew.js"></script>
+<!-- <script type="text/javascript" src="./common/js/pageScrollAjaxNew.js"></script> -->
+<!-- for development mode -->
+<script type="text/javascript" src="/pageScrollAjaxNew.js"></script>
+<!-- // for development mode -->
 <!-- // image-list javascript file -->
 <script>
-function triggerArrangeImage () {
-    $('#imgLists').arrangeImage({
+function triggerArrangeImage ( target ) {
+    $(target).arrangeImage({
         imageNum: 4,
         marginBottom: -4,
     }); 

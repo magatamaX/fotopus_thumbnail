@@ -12,6 +12,7 @@ const path = require('path');
 // JSONパス設定
 const jsonPath = path.resolve(__dirname, 'test.json');
 
+
 // サムネイルコンポーネント
 class Gallery extends React.Component {
 
