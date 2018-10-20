@@ -29,7 +29,7 @@ class ImageList extends React.Component {
       message: '',
     }
     // スクロールで呼び出しフラグ
-    this.handleScrollFlag = false;
+    this.handleScrollFlag = true;
 
     // 最初に呼び出す枚数
     this.init_set_num = props.initNum ? Number(props.initNum) : 28;
@@ -40,7 +40,7 @@ class ImageList extends React.Component {
     // 追加分を読込を発火する位置の範囲（下からの割合）
     this.scroll_range = props.scrollRange ? Number(props.scrollRange) : 0.3;
     // ロードしてからフラグ切替までのタイムラグ
-    this.flagInterval = props.flagInterval ? Number(props.flagInterval) : 300;
+    this.flagInterval = props.flagInterval ? Number(props.flagInterval) : 500;
 
   }
 
@@ -152,10 +152,11 @@ class ImageList extends React.Component {
 
       const argument = `#moreImgList${prevState.more_load_count}`
 
+      // arrange.jsのcallbackでフラグを切り替え
       this.props.loadFunc(argument, ()=> {
-        setTimeout(()=>{
+        setTimeout( () => {
           this.handleScrollFlag = false;
-        }, this.flagInterval);
+        }, this.flagInterval );
       });
       
     }
@@ -255,8 +256,9 @@ if ( targetElement ) {
     <ImageList
       loadFunc={
         ( target, callback = () => {} )=>{
-          triggerArrangeImage( target );
-          callback();
+          triggerArrangeImage( target, () => {
+            callback();
+          });  
         }
       }
       {...dataset}
