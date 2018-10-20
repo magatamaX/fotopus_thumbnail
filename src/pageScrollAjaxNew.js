@@ -18,11 +18,13 @@ class ImageList extends React.Component {
       // init
       init_img: [],
       init_load: false,
+      init_api_path: '',
       // more
       moreItems: [],
       more_load_count: 0,
       next_more_first_num: 0,
       moreButton: true,
+      more_api_path: '',
       // messages
       message: '',
     }
@@ -30,7 +32,7 @@ class ImageList extends React.Component {
     this.handleScrollFlag = false;
 
     // 最初に呼び出す枚数
-    this.init_set_num = props.initNum ? Number(props.initNum) : 100;
+    this.init_set_num = props.initNum ? Number(props.initNum) : 28;
     // 追加分の呼び出し枚数
     this.more_set_num = props.moreNum ? Number(props.moreNum) : 50;
     // URLクエリがあれば設定
@@ -55,6 +57,7 @@ class ImageList extends React.Component {
         this.loadedJSON( err, res, 'init' );
         this.setState({
           next_more_first_num: this.init_set_num,
+          init_api_path: initJsonPath,
         })
       });
   }
@@ -67,7 +70,10 @@ class ImageList extends React.Component {
     request.get(morePath)
     .accept('application/json')
     .end( ( err, res ) => {
-      this.loadedJSON( err, res, 'more', num )
+      this.loadedJSON( err, res, 'more', num );
+      this.setState({
+        more_api_path: morePath,
+      })
     })
   }
 
