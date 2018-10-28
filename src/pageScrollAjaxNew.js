@@ -130,9 +130,9 @@ class ImageList extends React.Component {
               <a href={item.pageurl}>
                 <img src={item.thumbnail} alt={item.img_alt} />
                 <div className="photo-info">
-                  <p>{item.title}</p>
+                  <p dangerouslySetInnerHTML={{__html: item.title}}></p>
                   <br />
-                  <p className="nickname">ニックネーム：{item.nickname}</p>
+                  <p className="nickname">ニックネーム：<span dangerouslySetInnerHTML={{__html: item.nickname}}></span></p>
                 </div>
               </a>
             </div>
@@ -214,9 +214,9 @@ class ImageList extends React.Component {
           <a href={item.pageurl}>
             <img src={item.thumbnail} alt={item.img_alt} />
             <div className="photo-info">
-              <p>{item.title}</p>
+              <p dangerouslySetInnerHTML={{__html: item.title}}></p>
               <br />
-              <p className="nickname">ニックネーム：{item.nickname}</p>
+              <p className="nickname">ニックネーム：<span dangerouslySetInnerHTML={{__html: item.nickname}}></span></p>
             </div>
           </a>
         </div>
