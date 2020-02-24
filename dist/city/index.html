@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="ie6" lang="ja"> <![endif]-->
+<!--[if IE 7]> <html class="ie7" lang="ja"> <![endif]-->
+<!--[if IE 8]> <html class="ie8" lang="ja"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="ja"> <!--<![endif]--><head>
+
+<!-- .tpl file path ::
+	\cgi-data\webapp\fotopus\application\modules\toppage\views\scripts\new\list.tpl
+-->
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta name="author" content="Olympus Corporation" />
+<meta name="robots" content="index, follow" />
+<meta name="keywords" content="写真,コミュニティ,ブログ,投稿,オリンパス" />
+<meta name="description" content="ブログや投稿写真で「見つける・つながる・楽しむ！」をテーマにしたオリンパスのコミュニティです。" />
+<meta name="copyright" content="Copyright Olympus Corporation" />
+<title>サンケイリビングカメラ女子部 フォトコン結果発表ページ 応募作品一覧</title>
+<link rel="stylesheet" type="text/css" href="https://fotopus.com/common/css/style.css" media="screen,tv,print" />
+<link rel="stylesheet" type="text/css" href="https://fotopus.com/shr/css/style-responsive.css" media="screen,tv,print" />
+<link rel="stylesheet" type="text/css" href="https://fotopus.com/shr/css/print.css" media="print" />
+<link type="text/css" rel="stylesheet" href="https://fotopus.com/common/css/layout.css">
+<link type="text/css" rel="stylesheet" href="https://fotopus.com/common/image-layout_01/css/arrange.css">
+<link rel="stylesheet" type="text/css" href="/city/css/phc_result.css">
+</head>
+<body>
+
+<div id="js-phcResultRoot"></div>
+
+<script type="text/javascript" src="https://fotopus.com/top/js/jquery.min.js"></script>
+<script type="text/javascript" src="https://fotopus.com/top/js/jquery-ui-1.9.2.custom.js"></script>
+<script type="text/javascript" src="https://fotopus.com/top/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="https://fotopus.com/top/js/jquery.nailthumb.1.1.js"></script>
+<script type="text/javascript" src="https://fotopus.com/top/js/jquery.init.js" charset="UTF-8"></script>
+<script type="text/javascript" src="https://fotopus.com/script/jquery.lightbox/jquery.lightbox.js?20160525"></script>
+
+<script src="../common/js/arrange_.js"></script>
+<script type="text/javascript" src="/city/js/phc_result.js"></script>
+<script>
+function triggerArrangeImage ( target ) {
+    $(target).arrangeImage({
+        imageNum: 4,
+        marginBottom: -4,
+    }); 
+}
+</script>
+
+</body>
+</html>

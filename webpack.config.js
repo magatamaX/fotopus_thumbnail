@@ -1,12 +1,13 @@
 const path = require('path');
 
 module.exports = {
-  mode: 'production',
+  mode: 'development',
   // 開発時はdevelopment、リリースもしくはビルド時にはproductionを記入
 
   entry: {
       'thumbnail': [ 'babel-polyfill', path.resolve(__dirname, 'src/index.js') ],
       'pageScrollAjaxNew': [ 'babel-polyfill', path.resolve(__dirname, 'src/pageScrollAjaxNew.js') ],
+      'city/js/phc_result': [ 'babel-polyfill', path.resolve(__dirname, 'src/phc_result.js') ],
   },
 
   output: {
@@ -24,7 +25,7 @@ module.exports = {
           {
             loader: 'babel-loader',
             options: {
-              presets: ['env', 'react']
+              presets: ['env', 'react', 'stage-2']
             }
           }
         ]
